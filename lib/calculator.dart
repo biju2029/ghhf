@@ -8,6 +8,18 @@ class Calculator extends StatefulWidget {
 }
 
 class _CalculatorState extends State<Calculator> {
+  TextEditingController heightcont = TextEditingController();
+  TextEditingController weightcont = TextEditingController();
+  String result = "";
+  void san() {
+    double H = double.parse(heightcont.text);
+    double W = double.parse(weightcont.text);
+    double bmi = W / (H / 100 * H / 100);
+    setState(() {
+      result = "your bmi is ${bmi.toStringAsFixed(2)}";
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,6 +48,7 @@ class _CalculatorState extends State<Calculator> {
                   child: Column(
                     children: [
                       TextField(
+                        controller: heightcont,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.height),
                           fillColor: (const Color.fromARGB(143, 144, 140, 140)),
@@ -49,6 +62,7 @@ class _CalculatorState extends State<Calculator> {
                       ),
                       SizedBox(height: 20),
                       TextField(
+                        controller: weightcont,
                         decoration: InputDecoration(
                           prefixIcon: Icon(Icons.monitor_weight),
                           fillColor: const Color.fromARGB(255, 157, 156, 153),
@@ -61,28 +75,34 @@ class _CalculatorState extends State<Calculator> {
                         ),
                       ),
                       SizedBox(height: 20),
-                      Container(
-                        height: 50,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              const Color.fromARGB(255, 75, 69, 67),
-                              const Color.fromARGB(255, 224, 220, 215),
-                            ],
+                      TextButton(
+                        onPressed: () {
+                          san();
+                        },
+                        child: Container(
+                          height: 50,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                const Color.fromARGB(255, 75, 69, 67),
+                                const Color.fromARGB(255, 224, 220, 215),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.circular(12),
                           ),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Calculate",
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: const Color.fromARGB(255, 0, 0, 0),
+                          child: Center(
+                            child: Text(
+                              "Calculate",
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: const Color.fromARGB(255, 0, 0, 0),
+                              ),
                             ),
                           ),
                         ),
                       ),
+                      Text(result),
                     ],
                   ),
                 ),
